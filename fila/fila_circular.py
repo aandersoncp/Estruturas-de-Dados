@@ -1,6 +1,6 @@
 import numpy as np 
 
-class Fila:
+class FilaCircular:
 
 	def __init__(self, tamanho):
 		self.tamanho = tamanho
@@ -49,7 +49,7 @@ class Fila:
 		self.numero_elementos -= 1
 		return temp
 
-fila = Fila(5)
+fila = FilaCircular(5)
 fila.enfileirar(9)
 fila.enfileirar(5)
 fila.enfileirar(3)
