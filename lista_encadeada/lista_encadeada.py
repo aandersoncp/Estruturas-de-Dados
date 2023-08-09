@@ -25,7 +25,7 @@ class Lista:
     
     def excluir_inicio(self):
         if self.lista_vazia():
-            return
+            return None
         no = self.primeiro
         self.primeiro = no.proximo
         return no
@@ -47,7 +47,11 @@ class Lista:
             anterior = atual
             atual = atual.proximo
         if atual != None:
-            anterior.proximo = atual.proximo
+            if atual == self.primeiro:
+                self.primeiro = atual.proximo
+            else:
+                anterior.proximo = atual.proximo
+        return atual
 
     def imprimir(self):
         no = self.primeiro
