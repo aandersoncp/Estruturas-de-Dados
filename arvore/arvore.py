@@ -119,7 +119,39 @@ class ArvoreBinariaBusca:
 
     def mostrar_maximo(self):
         print(f"Valor máximo: {self.maximo(self.raiz).valor}")
-        print("---")   
+        print("---")  
+
+    def transplantar(self, substituido, substituto):
+        if substituido.pai == None:
+            self.raiz = substituto
+        else:
+            if substituido == substituido.pai.esquerda:
+                substituido.pai.esquerda = substituto
+            else:
+                substituido.pai.direita = substituto
+        if substituto != None:
+            substituto.pai = substituido.pai
+    
+    def remover(self, valor):
+        if self.arvore_vazia():
+            return
+        no = self.buscar(valor)
+        if no != None:
+            if no.esquerda == None:
+                self.transplantar(no, no.direita)
+            else:
+                if no.direita == None:
+                    self.transplantar(no, no.esquerda)
+                else:
+                    temp = self.minimo(no.direita)
+                    if temp.pai != no:
+                        self.transplantar(temp, temp.direita)
+                        temp.direita = no.direita
+                        temp.direita.pai = temp
+                    self.transplantar(no, temp)
+                    temp.esquerda = no.esquerda
+                    temp.esquerda.pai = temp
+                    
 
 tree = ArvoreBinariaBusca()
 tree.inserir(10)
@@ -133,7 +165,4 @@ tree.inserir(17)
 tree.inserir(14)
 tree.inserir(12)
 tree.imprimir()
-tree.mostrar_maximo()
-tree.mostrar_minino()
-tree.sucessor(8)
-tree.antecessor(8)
+tree.remover(10)
