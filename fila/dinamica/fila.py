@@ -27,7 +27,7 @@ class Fila():
         else:
             no.proximo = self.tail
             self.tail.anterior = no
-            self.tail = no
+        self.tail = no
 
     def remover(self):
         if self.fila_vazia():

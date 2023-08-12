@@ -20,6 +20,17 @@ class ArvoreBinariaBusca:
             return True
         return False
 
+    def buscar(self, valor):
+        atual = self.raiz
+        while atual != None:
+            if atual.valor > valor:
+                atual = atual.esquerda
+            elif atual.valor < valor:
+                atual = atual.direita
+            else: 
+                return atual
+        return atual
+
     def inserir(self, valor):
         no = No(valor)
         if self.arvore_vazia():
@@ -51,37 +62,78 @@ class ArvoreBinariaBusca:
         self.percorrer_em_ordem(self.raiz)
         print("---")
 
-    def minimo(self):
-        if self.arvore_vazia():
+    def sucessor(self, valor):
+        no = self.buscar(valor)
+        if no != None:
+            if no.direita != None:
+                print(f"Sucessor de {valor}: {self.minimo(no.direita).valor}")
+                return self.minimo(no.direita)
+            else:
+                temp = no.pai
+                while temp != None and no == temp.direita:
+                    no = temp
+                    temp = temp.pai
+                if temp != None:
+                    print(f"Sucessor de {valor}: {temp.valor}")
+                else:
+                    print("Não possui sucessor!")
+                return temp
+    def antecessor(self, valor):
+        no = self.buscar(valor)
+        if no != None:
+            if no.esquerda != None:
+                print(f"Antecessor de {valor}: {self.maximo(no.esquerda).valor}")
+                return self.maximo(no.esquerda)
+            else:
+                temp = no.pai
+                while temp != None and no == temp.esquerda:
+                    no = temp
+                    temp = temp.pai
+                if temp != None:
+                    print(f"Antecessor de {valor}: {temp.valor}")
+                else:
+                    print("Não possui sucessor!")
+                return temp              
+
+    def minimo(self, no):
+        if self.raiz == no and no == None:
+            self.arvore_vazia()
             return
-        atual = self.raiz
+        atual = no
         while atual.esquerda != None:
             atual = atual.esquerda
-        print(f"Valor mínimo: {atual.valor}")
-        print("---")
+        return atual
     
-    def maximo(self):
-        if self.arvore_vazia():
+    def mostrar_minino(self):
+        print(f"Valor mínimo: {self.minimo(self.raiz).valor}")
+        print("---")
+   
+    def maximo(self, no):
+        if self.raiz == no and no == None:
+            self.arvore_vazia()
             return
-        atual = self.raiz
+        atual = no
         while atual.direita != None:
             atual = atual.direita
-        print(f"Valor máximo: {atual.valor}")
-        print("---")
-    
+        return atual
 
-
-
-
+    def mostrar_maximo(self):
+        print(f"Valor máximo: {self.maximo(self.raiz).valor}")
+        print("---")   
 
 tree = ArvoreBinariaBusca()
 tree.inserir(10)
+tree.inserir(8)
+tree.inserir(15)
+tree.inserir(7)
+tree.inserir(9)
 tree.inserir(5)
-tree.imprimir()
-tree.inserir(4)
-tree.imprimir()
+tree.inserir(13)
+tree.inserir(17)
+tree.inserir(14)
 tree.inserir(12)
-tree.inserir(6)
 tree.imprimir()
-tree.minimo()
-tree.maximo()
+tree.mostrar_maximo()
+tree.mostrar_minino()
+tree.sucessor(8)
+tree.antecessor(8)
