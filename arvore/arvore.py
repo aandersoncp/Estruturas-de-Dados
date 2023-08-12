@@ -24,20 +24,64 @@ class ArvoreBinariaBusca:
         no = No(valor)
         if self.arvore_vazia():
             self.raiz = no
+            print("---")
         else:
             atual = self.raiz
             while atual != None:
                 temp = atual
                 if atual.valor >= valor:
-                    atual = atual.esquerdo
+                    atual = atual.esquerda
                 else:
-                    atual = atual.direito
+                    atual = atual.direita
             no.pai = temp
-            if temp.valor >= no:
+            if temp.valor >= valor:
                 temp.esquerda = no 
             else:  
                 temp.direita = no 
     
-    def percorrer_em_ordem(self):
+    def percorrer_em_ordem(self, no):
+        if no == None:
+            return
+        atual = no
+        self.percorrer_em_ordem(no.esquerda)
+        no.mostrar_no()
+        self.percorrer_em_ordem(no.direita)
+
+    def imprimir(self):
+        self.percorrer_em_ordem(self.raiz)
+        print("---")
+
+    def minimo(self):
+        if self.arvore_vazia():
+            return
         atual = self.raiz
-         
+        while atual.esquerda != None:
+            atual = atual.esquerda
+        print(f"Valor mínimo: {atual.valor}")
+        print("---")
+    
+    def maximo(self):
+        if self.arvore_vazia():
+            return
+        atual = self.raiz
+        while atual.direita != None:
+            atual = atual.direita
+        print(f"Valor máximo: {atual.valor}")
+        print("---")
+    
+
+
+
+
+
+tree = ArvoreBinariaBusca()
+tree.inserir(10)
+tree.inserir(5)
+tree.imprimir()
+tree.inserir(4)
+tree.imprimir()
+tree.inserir(12)
+tree.inserir(6)
+tree.imprimir()
+tree.minimo()
+tree.maximo()

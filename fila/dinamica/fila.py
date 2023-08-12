@@ -24,7 +24,6 @@ class Fila():
         no = No(valor)
         if self.fila_vazia():
             self.head = no
-            self.tail = no
         else:
             no.proximo = self.tail
             self.tail.anterior = no
